@@ -297,26 +297,67 @@ export default function App() {
       <div className="mb-2 text-sm">Date: {selectedDate ? formatDayKey(selectedDate) : '-'}</div>
 
       <label className="block text-xs">Titre</label>
-      <input className="w-full border p-2 rounded mb-2" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} />
+      <input
+        className="w-full border p-2 rounded mb-2"
+        value={form.title}
+        onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
+      />
 
       <label className="block text-xs">Catégorie</label>
-      <select className="w-full border p-2 rounded mb-2" value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}>
-        {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+      <select
+        className="w-full border p-2 rounded mb-2"
+        value={form.category}
+        onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
+      >
+        {categories.map(c => (
+          <option key={c.id} value={c.id}>{c.name}</option>
+        ))}
       </select>
 
       <label className="block text-xs">Matière</label>
-      <select className="w-full border p-2 rounded mb-2" value={form.subjectId} onChange={e => setForm(f => ({ ...f, subjectId: e.target.value }))}>
+      <select
+        className="w-full border p-2 rounded mb-2"
+        value={form.subjectId}
+        onChange={e => setForm(f => ({ ...f, subjectId: e.target.value }))}
+      >
         <option value="">Aucune</option>
-        {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+        {subjects.map(s => (
+          <option key={s.id} value={s.id}>{s.name}</option>
+        ))}
       </select>
 
       <label className="block text-xs">Notes</label>
-      <textarea className="w-full border p-2 rounded}
+      <textarea
+        className="w-full border p-2 rounded mb-2"
+        rows={3}
+        value={form.notes}
+        onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
+      />
+
+      <div className="flex justify-end gap-2 mt-4">
+        <button
+          type="button"
+          onClick={() => {
+            setModalOpen(false)
+            setEditingId(null)
+            setEditingOriginalKey(null)
+            setForm(null)
+          }}
+          className="px-3 py-2 rounded border"
+        >
+          Annuler
+        </button>
+        <button type="submit" className="px-3 py-2 rounded bg-indigo-600 text-white">
+          Enregistrer
+        </button>
+      </div>
     </form>
   </div>
 )}
-      </div>
-    </div>
-  </div>
-)
-}
+    </div> {/* fin du .max-w-6xl */}
+  </div>   {/* fin du .min-h-screen */}
+</div>     {/* fin du mode sombre */}
+
+)           // 👈 fin du return
+}           // 👈 fin de la fonction App
+

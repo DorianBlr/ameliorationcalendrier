@@ -407,17 +407,68 @@ export default function App() {
             </aside>
           </main>
 
-          {/* Modale */}
           {modalOpen && form && (
-            <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
-              <form onSubmit={saveEvent} className="bg-white dark:bg-slate-800 p-4 rounded-xl w-full max-w-md shadow-lg">
-                <h3 className="text-lg font-semibold mb-2">Ajouter / modifier</h3>
-                <div className="mb-2 text-sm">Date: {selectedDate ? formatDayKey(selectedDate) : '-'}</div>
-                <label className="block text-xs">Titre</label>
-                <input className="w-full border p-2 rounded mb-2" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target}
-          {/* Je peux te livrer cette partie dans le prochain bloc si tu veux continuer */}
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
+    <form onSubmit={saveEvent} className="bg-white dark:bg-slate-800 p-4 rounded-xl w-full max-w-md shadow-lg">
+      <h3 className="text-lg font-semibold mb-2">Ajouter / modifier</h3>
+      <div className="mb-2 text-sm">Date: {selectedDate ? formatDayKey(selectedDate) : '-'}</div>
+
+      <label className="block text-xs">Titre</label>
+      <input className="w-full border p-2 rounded mb-2" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} />
+
+      <label className="block text-xs">Catégorie</label>
+      <select className="w-full border p-2 rounded mb-2" value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}>
+        {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+      </select>
+
+      <label className="block text-xs">Matière</label>
+      <select className="w-full border p-2 rounded mb-2" value={form.subjectId} onChange={e => setForm(f => ({ ...f, subjectId: e.target.value }))}>
+        <option value="">Aucune</option>
+        {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+      </select>
+
+      <label className="block text-xs">Notes</label>
+      <textarea className="w-full border p-2 rounded mb-2" rows={3} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
+
+      <label className="flex items-center gap-2 text-sm mb-2">
+        <input type="checkbox" checked={form.done} onChange={e => setForm(f => ({ ...f, done: e.target.checked }))} />
+        Fait
+      </label>
+
+      <label className="flex items-center gap-2 text-sm mb-2">
+        <input type="checkbox" checked={form.reminderEnabled} onChange={e => setForm(f => ({ ...f, reminderEnabled: e.target.checked }))} />
+        Activer un rappel
+      </label>
+
+      {form.reminderEnabled && (
+        <div className="mb-2">
+          <label className="block text-xs">Type de rappel</label>
+          <select className="w-full border p-2 rounded mb-2" value={form.option} onChange={e => setForm(f => ({ ...f, option: e.target.value }))}>
+            <option value="daysBefore">X jours avant</option>
+            <option value="mondayBefore">Lundi précédent</option>
+            <option value="fridayBefore">Vendredi précédent</option>
+          </select>
+
+          {form.option === 'daysBefore' && (
+            <select className="w-full border p-2 rounded mb-2" value={String(form.daysBefore)} onChange={e => setForm(f => ({ ...f, daysBefore: Number(e.target.value) }))}>
+              <option value={0}>Le jour même</option>
+              <option value={1}>1 jour avant</option>
+              <option value={2}>2 jours avant</option>
+              <option value={3}>3 jours avant</option>
+              <option value={7}>1 semaine avant</option>
+            </select>
+          )}
+
+          <label className="block text-xs">Heure du rappel</label>
+          <input type="time" className="w-full border p-2 rounded" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))} />
         </div>
+      )}
+
+      <div className="flex justify-end gap-2 mt-4">
+        <button type="button" onClick={() => { setModalOpen(false); setEditingId(null); setEditingOriginalKey(null); setForm(null) }} className="px-3 py-2 rounded border">Annuler</button>
+        <button type="submit" className="px-3 py-2 rounded bg-indigo-600 text-white">Enregistrer</button>
       </div>
-    </div>
-  )
-}
+    </form>
+  </div>
+)}
+

@@ -334,7 +334,7 @@ export default function App() {
         onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
       />
 
-      <div className="flex justify-end gap-2 mt-4">
+            <div className="flex justify-end gap-2 mt-4">
         <button
           type="button"
           onClick={() => {
@@ -354,6 +354,7 @@ export default function App() {
     </form>
   </div>
 )}
+
 
     </div> {/* fin du .max-w-6xl */}
   </div>   {/* fin du .min-h-screen */}

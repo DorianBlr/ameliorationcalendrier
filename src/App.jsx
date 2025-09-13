@@ -313,7 +313,7 @@ export default function App() {
       <label className="block text-xs">Notes</label>
       <textarea className="w-full border p-2 rounded}
       </div>
-    </div>
+    </form>
   </div>
 )
 }

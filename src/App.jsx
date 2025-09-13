@@ -354,6 +354,7 @@ export default function App() {
     </form>
   </div>
 )}
+
     </div> {/* fin du .max-w-6xl */}
   </div>   {/* fin du .min-h-screen */}
 </div>     {/* fin du mode sombre */}

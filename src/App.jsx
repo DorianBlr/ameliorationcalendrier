@@ -135,30 +135,29 @@ export default function App() {
       const now = Date.now()
       let changed = false
       const updated = Object.fromEntries(
-        Object.entries(events).map(([key, list]) => [
-          key,
-          list.map(ev => {
-            if (
-              ev.reminder?.enabled &&
-              !ev.reminder.notified &&
-              typeof ev.reminder.remindAt === 'number' &&
-              ev.reminder.remindAt <= now
-            ) {
-              try {
-                new Notification(ev.title || 'Rappel', {
-                  body: `${ev.title} — ${key}`
-                })
-              } catch {}
-              changed = true
-              return {
-                ...ev,
-                reminder: { ...ev.reminder, notified: true }
-              }
-            }
-            return ev
-          ])
-        ])
-      )
+  Object.entries(events).map(([key, list]) => {
+    const updatedList = list.map(ev => {
+      if (
+        ev.reminder?.enabled &&
+        !ev.reminder.notified &&
+        typeof ev.reminder.remindAt === 'number' &&
+        ev.reminder.remindAt <= now
+      ) {
+        try {
+          new Notification(ev.title || 'Rappel', {
+            body: `${ev.title} — ${key}`
+          })
+        } catch {}
+        return {
+          ...ev,
+          reminder: { ...ev.reminder, notified: true }
+        }
+      }
+      return ev
+    })
+    return [key, updatedList]
+  })
+)
       if (changed) setEvents(updated)
     }
 
